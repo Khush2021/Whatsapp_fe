@@ -57,6 +57,7 @@ export const userSlice = createSlice({
       state.user = {
         _id: "",
         name: "",
+        email: "",
         picture: "",
         status: "",
         token: "",
