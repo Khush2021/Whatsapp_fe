@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import SocketContext from "../../../context/SocketContext.js";
+import { useSelector } from "react-redux";
 
-const Input = ({ message, setMessage, textRef }) => {
+const Input = ({ message, setMessage, textRef, socket }) => {
+  const { activeConversation } = useSelector((state) => state.chat);
+  const [typing, setTyping] = useState(false);
   const onChangeHandler = (e) => {
     setMessage(e.target.value);
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", activeConversation._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    const timer = 1300;
+    setTimeout(() => {
+      let timeNow = new Date().getTime();
+      let timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timer && typing) {
+        socket.emit("stop typing", activeConversation._id);
+        setTyping(false);
+      }
+    }, timer);
   };
   return (
     <div className="w-full">
@@ -18,4 +36,9 @@ const Input = ({ message, setMessage, textRef }) => {
   );
 };
 
-export default Input;
+const InputWithContext = (props) => (
+  <SocketContext.Consumer>
+    {(socket) => <Input {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export default InputWithContext;

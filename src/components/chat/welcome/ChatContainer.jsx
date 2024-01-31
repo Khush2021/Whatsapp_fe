@@ -4,8 +4,9 @@ import { ChatMessages } from "../messages";
 import { ChatActions } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getConversationMessages } from "../../../features/chatSlice.js";
+import { checkOnlineStatus } from "../../../utils/chat.js";
 
-const ChatContainer = () => {
+const ChatContainer = ({ onlineUsers, typing }) => {
   const { activeConversation, messages } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
@@ -26,9 +27,15 @@ const ChatContainer = () => {
       {/* container */}
       <div>
         {/* chat header */}
-        <ChatHeader />
+        <ChatHeader
+          online={checkOnlineStatus(
+            onlineUsers,
+            user,
+            activeConversation.users
+          )}
+        />
         {/* chat messages */}
-        <ChatMessages />
+        <ChatMessages typing={typing} />
         {/* chat actions */}
         <ChatActions />
       </div>

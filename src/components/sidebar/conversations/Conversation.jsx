@@ -7,8 +7,10 @@ import {
   getConversationName,
   getConversationPicture,
 } from "../../../utils/chat.js";
+import SocketContext from "../../../context/SocketContext.js";
+import { capitalize } from "../../../utils/string.js";
 
-const Conversation = ({ convo }) => {
+const Conversation = ({ convo, socket, online, typing }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { activeConversation } = useSelector((state) => state.chat);
@@ -17,8 +19,9 @@ const Conversation = ({ convo }) => {
     receiver_id: getConversationId(user, convo.users),
     token,
   };
-  const openConversation = () => {
-    dispatch(create_open_conversation(values));
+  const openConversation = async () => {
+    let newConvo = await dispatch(create_open_conversation(values));
+    socket.emit("join conversation", newConvo.payload._id);
   };
   return (
     <li
@@ -34,7 +37,11 @@ const Conversation = ({ convo }) => {
         {/* left */}
         <div className="flex items-center gap-x-3">
           {/* conversation user picture  */}
-          <div className="relative h-[50px] min-w-[50px] rounded-full overflow-hidden">
+          <div
+            className={`relative h-[50px] min-w-[50px] rounded-full overflow-hidden ${
+              online ? "online" : ""
+            }`}
+          >
             <img
               src={getConversationPicture(user, convo.users)}
               alt={getConversationName(user, convo.users)}
@@ -45,18 +52,21 @@ const Conversation = ({ convo }) => {
           <div className="flex w-full flex-col">
             {/* conversation name */}
             <h1 className="font-bold flex items-center gap-x-2">
-              {getConversationName(user, convo.users)}
+              {capitalize(getConversationName(user, convo.users))}
             </h1>
             {/* conversation message */}
             <div>
               <div className="flex items-center gap-x-1 dark:text-dark_text_2">
                 <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
-                  <p>
-                    {convo.latestMessage?.message.length > 25
-                      ? `${convo.latestMessage?.message.substring(0, 25)}...`
-                      : convo.latestMessage?.message}
-                  </p>
-                  {/* convo.latestMessage.message- this might get error as some conversations might not have latest message */}
+                  {typing === convo._id ? (
+                    <p className="text-green_1">Typing...</p>
+                  ) : (
+                    <p>
+                      {convo.latestMessage?.message.length > 25
+                        ? `${convo.latestMessage?.message.substring(0, 25)}...`
+                        : convo.latestMessage?.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -77,4 +87,10 @@ const Conversation = ({ convo }) => {
   );
 };
 
-export default Conversation;
+const ConversationWithContext = (props) => (
+  <SocketContext.Consumer>
+    {(socket) => <Conversation {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+
+export default ConversationWithContext;
