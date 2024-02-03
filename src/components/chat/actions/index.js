@@ -1,5 +1,5 @@
 import ChatActions from "./ChatActions";
-import EmojiPicker from "./EmojiPicker";
+import EmojiPickerApp from "./EmojiPicker";
 import { Attachments } from "./attachments";
 import Input from "./Input";
-export { ChatActions, EmojiPicker, Attachments, Input };
+export { ChatActions, EmojiPickerApp, Attachments, Input };

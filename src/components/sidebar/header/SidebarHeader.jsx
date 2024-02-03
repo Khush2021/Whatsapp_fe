@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { ChatIcon, CommunityIcon, DotsIcon, StoryIcon } from "../../../svg";
-import Menu from "./Menu";
+import { Menu } from ".";
 
 const SidebarHeader = () => {
   const { user } = useSelector((state) => state.user);

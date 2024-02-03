@@ -1,5 +1,5 @@
 import React from "react";
-import Contact from "./Contact";
+import { Contact } from ".";
 
 const SearchResults = ({ searchResults, setSearchResults }) => {
   return (

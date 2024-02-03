@@ -1,3 +1,4 @@
-import { WhatsappHome, ChatContainer } from "./welcome";
+import { WhatsappHome } from "./welcome";
+import ChatContainer from "./ChatContainer";
 
 export { WhatsappHome, ChatContainer };

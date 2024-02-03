@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
-import EmojiPickerApp from "./EmojiPicker";
 import { Attachments } from "./attachments";
-import Input from "./Input";
+import { Input, EmojiPickerApp } from ".";
 import { SendIcon } from "../../../svg";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../../../features/chatSlice";

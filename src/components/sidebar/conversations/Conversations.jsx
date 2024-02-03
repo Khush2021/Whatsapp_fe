@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Conversation from "./Conversation";
+import { Conversation } from ".";
 import { checkOnlineStatus } from "../../../utils/chat";
 
 const Conversations = ({ onlineUsers, typing }) => {
