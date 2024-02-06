@@ -1,7 +1,9 @@
 import DownloadIcon from "../../../../svg/Download";
 export default function FileOthers({ file, type, me }) {
   return (
-    <div className="bg-green_4 p-2 rounded-lg">
+    <div
+      className={`p-2 rounded-lg ${me ? "bg-green_3" : "dark:bg-dark_bg_2"}`}
+    >
       {/*Container*/}
       <div className="flex justify-between gap-x-8">
         {/*File infos*/}

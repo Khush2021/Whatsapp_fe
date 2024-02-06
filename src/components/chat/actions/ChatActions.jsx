@@ -20,6 +20,7 @@ const ChatActions = ({ socket }) => {
   const values = {
     message,
     convo_id: activeConversation._id,
+    files: [],
     token,
   };
   const sendMessageHandler = async (e) => {

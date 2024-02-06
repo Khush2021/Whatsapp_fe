@@ -2,6 +2,7 @@ import React from "react";
 import { Contact } from ".";
 
 const SearchResults = ({ searchResults, setSearchResults }) => {
+  console.log(searchResults);
   return (
     <div className="w-full convos scrollbar">
       <div>

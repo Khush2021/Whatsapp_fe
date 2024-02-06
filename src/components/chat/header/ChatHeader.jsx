@@ -1,13 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { DotsIcon, SearchLargeIcon } from "../../../svg";
+import {
+  CallIcon,
+  DotsIcon,
+  SearchLargeIcon,
+  VideoCallIcon,
+} from "../../../svg";
 import { capitalize } from "../../../utils/string";
 import {
   getConversationName,
   getConversationPicture,
 } from "../../../utils/chat";
 
-const ChatHeader = ({ online }) => {
+const ChatHeader = ({ online, callUser }) => {
   const { activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   // const { name, picture } = activeConversation;
@@ -41,7 +46,21 @@ const ChatHeader = ({ online }) => {
           </div>
         </div>
         {/* right */}
-        <ul className="flex items-center gap-x-2.5 ">
+        <ul className="flex items-center gap-x-2.5">
+          {online ? (
+            <li onClick={() => callUser()}>
+              <button className="btn">
+                <VideoCallIcon />
+              </button>
+            </li>
+          ) : null}
+          {online ? (
+            <li>
+              <button className="btn">
+                <CallIcon />
+              </button>
+            </li>
+          ) : null}
           <li>
             <button className="btn">
               <SearchLargeIcon className="dark:fill-dark_svg_1" />

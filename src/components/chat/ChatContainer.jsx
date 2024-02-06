@@ -7,7 +7,7 @@ import { getConversationMessages } from "../../features/chatSlice.js";
 import { checkOnlineStatus } from "../../utils/chat.js";
 import { FilesPreview } from "./preview/files";
 
-const ChatContainer = ({ onlineUsers, typing }) => {
+const ChatContainer = ({ onlineUsers, typing, callUser }) => {
   const { activeConversation, files } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const { token } = user;
@@ -34,6 +34,7 @@ const ChatContainer = ({ onlineUsers, typing }) => {
             user,
             activeConversation.users
           )}
+          callUser={callUser}
         />
         {files.length > 0 ? (
           <FilesPreview />

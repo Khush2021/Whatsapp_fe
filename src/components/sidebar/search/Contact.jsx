@@ -57,10 +57,10 @@ const Contact = ({ contact, setSearchResults, socket }) => {
   );
 };
 
-const ContactWithContext = (props) => {
+const ContactWithContext = (props) => (
   <SocketContext.Consumer>
     {(socket) => <Contact {...props} socket={socket} />}
-  </SocketContext.Consumer>;
-};
+  </SocketContext.Consumer>
+);
 
 export default ContactWithContext;
